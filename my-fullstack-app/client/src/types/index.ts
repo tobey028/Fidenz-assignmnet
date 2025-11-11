@@ -1,1 +1,17 @@
-// This file exports TypeScript interfaces and types used throughout the client application, ensuring type safety for props and state.
+export interface WeatherData {
+  id: number;
+  name: string;
+  tempC: number;
+  tempF: number;
+  description: string;
+  icon: string;
+  humidity: number;
+  windSpeed: number;
+  fetchedAt: string;
+}
+
+export interface City {
+  id: number;
+  name: string;
+  country: string;
+}
