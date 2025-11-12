@@ -1,4 +1,4 @@
-// filepath: /Users/tobey/Desktop/example/client/tsconfig.node.json
+
 {
   "compilerOptions": {
     "composite": true,
