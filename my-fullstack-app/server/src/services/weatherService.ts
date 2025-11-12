@@ -6,6 +6,9 @@ const API_KEY = process.env.OPENWEATHER_API_KEY;
 const CACHE_TTL = parseInt(process.env.CACHE_TTL_MINUTES || '10');
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
+// Debug log
+console.log('🔑 API Key loaded:', API_KEY ? `${API_KEY.substring(0, 8)}...` : 'NOT FOUND');
+
 export async function getWeatherByCityId(cityId: string): Promise<WeatherResponse> {
   const cacheKey = `weather:${cityId}`;
   const cached = cache.get<WeatherResponse>(cacheKey);
@@ -18,17 +21,17 @@ export async function getWeatherByCityId(cityId: string): Promise<WeatherRespons
   console.log(`Cache miss for city ${cityId}, fetching from API...`);
 
   const url = `${BASE_URL}?id=${cityId}&appid=${API_KEY}&units=metric`;
+  console.log('📡 Fetching URL:', url.replace(API_KEY || '', 'API_KEY_HIDDEN'));
   
   const response = await fetch(url);
 
   if (!response.ok) {
-    if (response.status === 404) {
-      throw new Error('City not found');
-    }
+    const errorText = await response.text();
+    console.error('❌ API Error Response:', errorText);
     throw new Error(`OpenWeatherMap API error: ${response.status}`);
   }
 
-  const data: OpenWeatherAPIResponse = await response.json() as OpenWeatherAPIResponse;
+  const data = await response.json() as OpenWeatherAPIResponse;
 
   const weather: WeatherResponse = {
     id: data.id,

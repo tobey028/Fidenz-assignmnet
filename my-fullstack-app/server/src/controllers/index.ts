@@ -3,5 +3,5 @@ export class IndexController {
         res.json({ message: "Hello, World!" });
     }
 
-    // Add more methods to handle other routes as needed
+   
 }
