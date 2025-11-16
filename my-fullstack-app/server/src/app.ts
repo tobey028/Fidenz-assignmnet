@@ -1,28 +1,44 @@
 import dotenv from 'dotenv';
-
-// Load environment variables FIRST, before any other imports
 dotenv.config();
 
 import express from 'express';
 import cors from 'cors';
+import { AppDataSource } from './data-source';
+import authRoutes from './routes/authRoutes';
+import taskRoutes from './routes/taskRoutes';
 import weatherRoutes from './routes/weatherRoutes';
 
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Routes
-app.use('/api', weatherRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/tasks', taskRoutes);
+app.use('/api/weather', weatherRoutes);
 
-// Health check
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  res.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString() 
+  });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📡 API endpoint: http://localhost:${PORT}/api/weather?cityId=XXXXX`);
-});
+AppDataSource.initialize()
+  .then(() => {
+    console.log('✅ Database connected');
+    
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on http://localhost:${PORT}`);
+      console.log(`📡 API endpoints:`);
+      console.log(`   - Auth: http://localhost:${PORT}/api/auth`);
+      console.log(`   - Tasks: http://localhost:${PORT}/api/tasks`);
+      console.log(`   - Weather: http://localhost:${PORT}/api/weather`);
+    });
+  })
+  .catch((error) => {
+    console.error('❌ Database connection error:', error);
+  });
+
+export default app;
