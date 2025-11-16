@@ -3,7 +3,7 @@ import { getWeatherByCityId } from '../services/weatherService';
 
 const router = Router();
 
-router.get('/weather', async (req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
     const { cityId } = req.query;
 

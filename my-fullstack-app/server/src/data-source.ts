@@ -1,13 +1,15 @@
 import { DataSource } from 'typeorm';
 import { User } from './entities/User';
-import { Task } from './entities/Task';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 export const AppDataSource = new DataSource({
   type: 'sqlite',
   database: process.env.DATABASE_PATH || './database.sqlite',
   synchronize: true,
   logging: false,
-  entities: [User, Task],
-  migrations: [],
+  entities: [User],
   subscribers: [],
+  migrations: [],
 });
