@@ -44,21 +44,22 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({ weather, onRemove }) =
 
 const styles: { [key: string]: React.CSSProperties } = {
   card: {
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    color: 'white',
+    background: 'rgba(255, 255, 255, 0.3)',
+    color: '#333',
+    border: '1px solid #ddd',
     borderRadius: '16px',
     padding: '24px',
     minWidth: '280px',
     position: 'relative',
-    boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
+    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
   },
   closeBtn: {
     position: 'absolute',
     top: '8px',
     right: '8px',
-    background: 'rgba(255,255,255,0.2)',
+    background: 'rgba(0,0,0,0.1)',
     border: 'none',
-    color: 'white',
+    color: '#333',
     fontSize: '24px',
     width: '32px',
     height: '32px',

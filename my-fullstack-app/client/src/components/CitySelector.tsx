@@ -14,7 +14,6 @@ export const CitySelector: React.FC<CitySelectorProps> = ({
 }) => {
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Select Cities to View Weather</h2>
       <div style={styles.grid}>
         {CITIES.map((city) => {
           const isSelected = selectedCities.includes(city.id);
